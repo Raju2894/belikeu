@@ -3,55 +3,39 @@
 
 using namespace std;
 
-int g=0,k=0;
 
-void swap(int *a,int *b){
-	int *temp = a;
-	a=b;
-	b=temp;
+
+int quick(int arr[], int left, int right) //quicksort takes an array, the leftmost index and the rightmost index
+{
+	  int comparison = 0;
+      int i = left;
+	  int j = right;
+	  int tmp;
+	  int pivot = arr[(left + right) / 2];
+      /* partition */
+      while (i <= j) {
+			comparison++;
+            while (arr[i] < pivot)
+                  i++;
+            while (arr[j] > pivot)
+                  j--;
+            if (i <= j) {
+                  tmp = arr[i];
+                  arr[i] = arr[j];
+                  arr[j] = tmp;
+                  i++;
+                  j--;
+            }
+      };
+
+      /* recursion */
+      if (left < j)
+            quick(arr, left, j);
+      if (i < right)
+            quick(arr, i, right);
+	  
+	  return comparison;
 }
-
-int pivot(int *a,int l,int h){
-	int pivot = a[h];
-	int pivot1 = a[l];
-	int s = l,r=l;
-	int f=0;
-	if(f==0){
-	for(int i=l;i<h;i++){
-		if(a[i] <= pivot){
-			swap(a[i],a[s]);
-			g++;
-			s++;
-		}
-	}
-	f=1;
-	}
-	else if(f==1){
-		for(int i=l;i<h;i++){
-			if(a[i] <= pivot){
-				swap(a[i],a[r]);
-				k++;
-				r++;
-			}
-	}
-	}
-
-	swap(a[s],a[h]);
-	g++;
-	k++;
-	return s;
-}
-
-
-void quicksort(int *a, int l,int h){
-	int pi;
-	if(l < h){
-		pi = pivot(a,l,h);
-		quicksort(a,l,pi-1);
-		quicksort(a,pi+1,h);
-	}
-}
-
 
 int main(){
 	int t;
@@ -60,13 +44,14 @@ int main(){
 		int n;
 		cin >> n;
 		int *a = new int[n];
-		for(int i=0;i<n;i++)
+		int *b = new int[n];		
+		for(int i=0;i<n;i++){
 			cin >> a[i];
-
-
-		quicksort(a,0,n-1);
-
-		cout <<"" <<  k << g << endl;
+			b[i] = a[i];
+		}
+		int g=quick(a,0,n-1);
+		
+		cout <<"df" << g << endl;
 		for(int i=0;i<n;i++)
 			cout << a[i] << " ";
 
@@ -75,3 +60,4 @@ int main(){
 	}
 	return 0;
 }
+
