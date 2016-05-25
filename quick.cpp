@@ -7,19 +7,19 @@ int g=0;
 int pivot(int *a,int l,int h){
 	cout << h << l << "pi\n";
 	int pivot = a[l];
-	int start = h;
+	int start = l+1;
 	for(int i=l+1;i<=h;i++){
 		if(a[i] <= pivot){
 			int temp = a[i];
 			a[i]=a[start];
 			a[start] = temp;
-			start--;
+			start++;
 		}
 	}
 	int temp = a[l];
-	a[l]=a[start];
-	a[start] = temp;
-	return start;
+	a[l]=a[start-1];
+	a[start-1] = temp;
+	return start-1;
 }
 	
 void quick(int *a,int l,int h){
